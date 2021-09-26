@@ -1,0 +1,80 @@
+<div class="m-1 p-2 mt-0 contain">
+    <table class="table table-striped">
+        <thead style="border-bottom: 7px solid grey; font-size: 10px;">
+            <tr class="text-center">
+                <th>s/n</th>
+                <th style="white-space: nowrap;" class="email">Name</th>
+                <th style="white-space: nowrap;">Plan</th>
+                <th>Executed</th>
+                <th>Good Execution</th>
+                <th>Task Execution</th>
+                 <!-- putting this to act as sepeerator due to d issue of d-flex on td -->
+                <th></th>
+                <th>Compliance (Success)</th>
+                 <!-- putting this to act as sepeerator due to d issue of d-flex on td -->
+                <th></th>
+                <th>Ranking (Acid Compliance)</th>
+                
+            </tr>
+        </thead>
+
+        <tbody *ngIf="!loading">
+            <tr class="text-center" *ngFor="let data of data; let i = index">
+                <td>{{i + 1}}</td>
+                <td class="email">{{ data.email }}</td>
+                <td>{{ data.plan }}</td>
+                <td>{{ data.totalTaskExec }}</td>
+                <td>{{ data.totalGoodExec }}</td>
+
+                <td class="email font-weight-bold row"> 
+                    <div style="width: 80%; border: 1px solid grey; margin-right: 5px;">
+                        <h6 [style.background-color]="data.perc_task_Executed >= 50? 
+                            'green' : data.perc_task_Executed >= 30? 
+                            'yellow' : data.perc_task_Executed >= 0? 
+                            'red' : 'grey'" [style.width]="data.perc_task_Executed+'%' ">
+                        </h6>
+                    </div> 
+                    <div style="width: 10%;">
+                        {{ data.perc_task_Executed }}%
+                    </div>
+                </td>
+                <!-- putting this to act as sepeerator due to d issue of d-flex on td -->
+                <td></td>
+                
+                <td class="email font-weight-bold row"> 
+                    <div style="width: 80%; border: 1px solid grey; margin-right: 5px;">
+                        <h6 [style.background-color]="data.percGood >= 50? 
+                            'green' : data.percGood >= 30? 
+                            'yellow' : data.percGood >= 0? 
+                            'red' : 'grey'" [style.width]="data.percGood+'%' ">
+                        </h6>
+                    </div> 
+                    <div style="width: 10%;">
+                        {{ data.percGood }}%
+                    </div>
+                </td>
+                 <!-- putting this to act as sepeerator due to d issue of d-flex on td -->
+                <td></td>
+
+                <td class="email font-weight-bold row"> 
+                    <div style="width: 80%; border: 1px solid grey; margin-right: 5px;">
+                        <h6 [style.background-color]="data.ranking >= 50? 
+                            'green' : data.ranking >= 30? 
+                            'yellow' : data.ranking >= 0? 
+                            'red' : 'grey'" [style.width]="data.ranking+'%' ">
+                        </h6>
+                    </div> 
+                    <div style="width: 10%;">
+                        {{ data.ranking }}%
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+
+        <div *ngIf="loading">
+            <img src="https://portal.sftravel.com/login/images/ajax-loader.gif" width="40" alt="">
+            <div class="mt-4 ml-1">loading...</div>
+        </div>
+
+    </table>
+</div>

@@ -1,0 +1,18 @@
+<div class="dropdown dropdown ml-5 mt-1">
+    <button class="btn dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Feedback? <span style="color: 'grey'; font-size: 10px;"></span>
+    </button>
+    <div class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton">
+        <h6>What is/are your feedback(s)</h6>
+        <!-- [(ngModel)]="checkBox.good" id="good" (change)="search()" -->
+        <li style="font-size: 13px; border-bottom: 1px solid rgb(190, 187, 187);" class="d-flex p-1 pb-2 mb-2 mt-2">Blurry image <input type="checkbox" class="ml-auto" name="blurry" [(ngModel)]="feedback.blurry" id="blurry" /></li>
+        <li style="font-size: 13px; border-bottom: 1px solid rgb(190, 187, 187);" class="d-flex p-1 pb-2 mb-2">Photo over exposed <input type="checkbox" class="ml-auto" name="photo_over_exposed" [(ngModel)]="feedback.photo_over_exposed" id="photo_over_exposed"  /></li>
+        <li style="font-size: 13px; border-bottom: 1px solid rgb(190, 187, 187);" class="d-flex p-1 pb-2 mb-2">Wrong chiller detection  <input type="checkbox" class="ml-auto" name="wrong_chiller_detection" [(ngModel)]="feedback.wrong_chiller_detection" id="wrong_chiller_detection" /></li>               
+        <li style="font-size: 13px; border-bottom: 1px solid rgb(190, 187, 187);" class="d-flex p-1 pb-2 mb-2">Wrong number(s) of SKU<input type="checkbox" class="ml-auto" name="wrong_numbers_of_sku" [(ngModel)]="feedback.wrong_numbers_of_sku" id="wrong_numbers_of_sku" /></li>               
+        <li style="font-size: 13px; border-bottom: 1px solid rgb(190, 187, 187);" class="d-flex p-1 pb-2 mb-2">Suspected Photo<input type="checkbox" class="ml-auto" name="suspected_photo" [(ngModel)]="feedback.suspected_photo" id="suspected_photo" /></li>               
+        <li style="font-size: 13px; " class="d-flex p-1">Wrong white spaces or contamination<input type="checkbox" class="ml-auto" name="wrong_whitespaces" [(ngModel)]="feedback.wrong_whitespaces" id="wrong_whitespaces" /></li>  
+        <button type="submit" (click) = "feedbackFunc()" class="col-12 mt-2" style="font-size: 13px;">Submit my feedback</button>             
+    </div>
+</div>
+
+<app-notify [notification_msg] = "notification_msg"></app-notify>

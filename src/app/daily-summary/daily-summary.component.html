@@ -1,0 +1,38 @@
+<app-admin *ngIf="!slashAdmin"></app-admin>
+<div class="m-1 p-2 mt-0 contain">
+
+    <table class="table">
+        <thead style="border-bottom: 7px solid grey; font-size: 10px;">
+            <tr>
+                <th>s/n</th>
+                <th>BDR Name</th>
+                <th>{{today==1? 'Monday':today==2? 'Tuesday':today==3? 'Wednesday':today==4? 'Thursday' : today==5? 'Friday':'Weekend'}} Call Schedule</th>
+                <th style="white-space: nowrap;">Cooler Execution</th>
+                <th style="white-space: nowrap;">Trophy Stout Poster</th>
+                <th style="white-space: nowrap;">Trophy Lager Poster</th>
+                <th style="white-space: nowrap;">Total Tasks</th>
+            </tr>
+        </thead>
+
+        <tbody *ngIf="!loading">
+            <tr class="" *ngFor="let data of tempData; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{ data?.name }}</td>
+                <td *ngIf="today == 1">{{ data?.mon }}</td>
+                <td *ngIf="today == 2">{{ data?.tue }}</td>
+                <td *ngIf="today == 3">{{ data?.wed }}</td>
+                <td *ngIf="today == 4">{{ data?.thur }}</td>
+                <td *ngIf="today == 5">{{ data?.fri }}</td>
+                <td *ngIf="today !== 5 && today !== 4 && today !== 3 && today !== 2 && today !== 1">0</td>
+                <td style="font-weight: bold;">{{ data?.chillerLength }}</td>
+                <td style="font-weight: bold;">{{ data?.posterLength }}</td>
+                <td style="font-weight: bold;">{{ data?.chairLength }}</td>
+                <td style="font-weight: bold; color: green;">{{ data?.totalTasks }}</td>
+            </tr>
+        </tbody>
+
+        <div *ngIf="loading">
+            <img src="https://portal.sftravel.com/login/images/ajax-loader.gif" width="30" alt="">
+        </div>
+    </table>
+</div>

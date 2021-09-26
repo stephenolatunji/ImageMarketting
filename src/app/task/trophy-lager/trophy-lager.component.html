@@ -1,0 +1,44 @@
+<app-admin *ngIf="!visualizer"></app-admin>
+
+<div class="m-1 p-2 mt-0 contain" *ngIf="!visualizer" >
+
+    <table class="table">
+        <thead style="border-bottom: 7px solid grey; font-size: 10px;">
+            <tr class="text-center">
+                <th>s/n</th>
+                <th style="white-space: nowrap;">Poc Id</th>
+                <th style="white-space: nowrap;">Task Id</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>BDR</th>
+                <th>District</th>
+                <th>Outlet Status</th>
+                <th style="white-space: nowrap;" class="text-center">Well Executed</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+
+        <tbody *ngIf="!loading">
+            <tr class="text-center" *ngFor="let data of trimmedData; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{ data?.pocId }}</td>
+                <td>{{ data?.taskId }}</td>
+                <td style="white-space: nowrap;">{{ data?.date.slice(0,10) }}</td>
+                <td style="white-space: nowrap;">{{ data?.time }}</td>
+                <td style="white-space: nowrap;">{{ data?.name }}</td>
+                <td style="white-space: nowrap;">{{ data?.district }}</td>
+                <td [ngStyle]="{color: data?.outletStatus=='Open' ? 'green' : 'red'}">{{ data?.outletStatus==0 || data?.outletStatus==null || data?.outletStatus=='undefined' ? '-' : data?.outletStatus  }}</td>
+                <td [ngStyle]="{color: (data?.action=='success' || data?.action=='good')? 'green' : data?.action=='bad'? 'red' : 'purple'}">{{ (data?.action=='success' || data?.action=='good')? 'Yes': data?.action=='bad'? 'No': 'Awaiting AI' }}</td>
+                <!-- <td (click)="copyFunc(data?.image)" style="white-space: nowrap;"><i class="fa fa-copy"></i> copy</td> -->
+                <td style="white-space: nowrap;"><a href="{{data?.image}}"> <i class="fa fa-picture-o"></i> click</a></td>
+            </tr>
+        </tbody>
+
+        <div *ngIf="loading">
+            <img src="https://portal.sftravel.com/login/images/ajax-loader.gif" width="40" alt="">
+            <div class="mt-4 ml-1">loading...</div>
+        </div>
+
+    </table>
+    
+</div>

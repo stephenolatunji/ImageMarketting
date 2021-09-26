@@ -1,0 +1,165 @@
+<div class="row m-1 pr-4" style="background-color: #fefefea8;" *ngIf="content">
+    
+    <button class="btn m-2" style="border: 1px solid black;" (click)="searchDateForSummary()" *ngIf="currentPath=='/admin/summary' && filterBy=='DATE'">Search</button>
+    
+    
+    
+    <div class="dropdown ml-3 mt-2 col-3">
+        
+        <input type="search" class="search col-12 pt-1 pb-1 mb-1 dropdown-toggle" autocomplete="off"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (keyup)="search()" placeholder="filter..." name="searchVal" id="search" [(ngModel)]="searchVal">
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            
+            <span style="font-size: 12px;">Results</span>
+            <li style="padding: 5px; color: grey; font-size: 12px; cursor: pointer;" *ngFor="let dat of dat" (click)=" filterBy=='BDR'? set(dat.name) : filterBy=='DISTRICT'? set(dat.district) : filterBy=='TEAM_LEADER'? set(dat.team_lead) : set(dat.pocId)">{{ filterBy=='BDR'?  dat.name : filterBy=='DISTRICT'? dat.district : filterBy=='TEAM_LEADER'? dat.team_lead : dat.pocId}}</li>
+           
+            <!-- <a class="dropdown-item" (click)="filter_by('chiller_presence')" *ngIf="currentPath == '/admin/chiller' && currentPath!=='/admin/district-summary' && currentPath!=='/admin/bdr-summary'">Chiller Presence</a>
+            <a class="dropdown-item" (click)="filter_by('exec_type')" *ngIf="currentPath!=='/admin/summary' && currentPath!=='/admin/district-summary' && currentPath!=='/admin/bdr-summary'">Execution Type</a> -->
+            <!-- <a class="dropdown-item" (click)="filter_by('date')" *ngIf="currentPath!=='/admin/district-summary' && currentPath!=='/admin/bdr-summary'">Date</a> -->
+        </div>
+     
+    </div> 
+
+
+
+
+    <div class="dropdown ml-3 mt-3">
+        <button class="btn dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Search by <span style="color: 'grey'; font-size: 10px;">{{filterBy}}</span>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <span style="font-size: 12px;">Search by</span>
+            <mat-divider></mat-divider>
+            <a class="dropdown-item" (click)="filter_by('bdr')" *ngIf="currentPath!=='/admin/district-summary'">BDR</a>
+            <a class="dropdown-item" (click)="filter_by('team_leader')" *ngIf="currentPath!=='/admin/district-summary' && !isTeamLeader">Team Lead</a>
+            <a class="dropdown-item" (click)="filter_by('district')" *ngIf="currentPath!=='/admin/bdr-summary' && !isTeamLeader">District</a>
+            <a class="dropdown-item" (click)="filter_by('poc_id')" *ngIf="currentPath!=='/admin/summary' && currentPath!=='/admin/district-summary' && currentPath!=='/admin/bdr-summary'">Poc Id</a>
+        
+            <mat-divider class="mt-1"></mat-divider>
+            <span style="font-size: 12px;"  *ngIf="currentPath!=='/admin/tsp' && currentPath!=='/admin/hlp' && currentPath!=='/admin/tlp' && currentPath!=='/admin/chart/general' && currentPath!=='/admin/summary' && currentPath!=='/admin'">Filter by</span>
+            <mat-divider></mat-divider>
+            <li *ngIf="currentPath!=='/admin/tsp' && currentPath!=='/admin/hlp' && currentPath!=='/admin/tlp' && currentPath!=='/admin/chart/general' && currentPath!=='/admin/summary' && currentPath!=='/admin'" style="font-size: 13px;" class="d-flex  p-2">Good Execution <input type="checkbox" class="ml-auto mt-1" name="good" [(ngModel)]="checkBox.good" id="good" (change)="search()" /></li>
+            <li *ngIf="currentPath!=='/admin/tsp' && currentPath!=='/admin/hlp' && currentPath!=='/admin/tlp' && currentPath!=='/admin/chart/general' && currentPath!=='/admin/summary' && currentPath!=='/admin'" style="font-size: 13px;" class="d-flex  p-2">Bad Execution <input type="checkbox" class="ml-auto" name="bad" checked [(ngModel)]="checkBox.bad" id="bad" (change)="search()"/></li>
+            <li *ngIf="currentPath!=='/admin/tsp' && currentPath!=='/admin/hlp' && currentPath!=='/admin/tlp' && currentPath!=='/admin/chart/general' && currentPath!=='/admin/summary' && currentPath!=='/admin'" style="font-size: 13px;" class="d-flex  p-2">Working Chiller <input type="checkbox"  class="ml-auto" name="working_chiller" checked [(ngModel)]="checkBox.working_chiller" id="working_chiller" (change)="search()" /></li>
+            <li *ngIf="currentPath!=='/admin/tsp' && currentPath!=='/admin/hlp' && currentPath!=='/admin/tlp' && currentPath!=='/admin/chart/general' && currentPath!=='/admin/summary' && currentPath!=='/admin'" style="font-size: 13px;" class="d-flex  p-2">Not working Chiller <input type="checkbox"  class="ml-auto" name="no_working_chiller" checked [(ngModel)]="checkBox.no_working_chiller" id="no_working_chiller" (change)="search()" /></li>
+            <li *ngIf="currentPath!=='/admin/tsp' && currentPath!=='/admin/hlp' && currentPath!=='/admin/tlp' && currentPath!=='/admin/chart/general' && currentPath!=='/admin/summary' && currentPath!=='/admin'" style="font-size: 13px;" class="d-flex  p-2">Glass Chiller <input type="checkbox" class="ml-auto" name="glass" checked [(ngModel)]="checkBox.glass" id="glass" (change)="search()"/></li>
+            <li *ngIf="currentPath!=='/admin/tsp' && currentPath!=='/admin/hlp' && currentPath!=='/admin/tlp' && currentPath!=='/admin/chart/general' && currentPath!=='/admin/summary' && currentPath!=='/admin'" style="font-size: 13px;" class="d-flex  p-2">Chest Chiller <input type="checkbox"  class="ml-auto" name="chest" checked [(ngModel)]="checkBox.chest" id="chest" (change)="search()" /></li>
+            
+              
+            <!-- <a class="dropdown-item" (click)="filter_by('chiller_presence')" *ngIf="currentPath == '/admin/chiller' && currentPath!=='/admin/district-summary' && currentPath!=='/admin/bdr-summary'">Chiller Presence</a>
+            <a class="dropdown-item" (click)="filter_by('exec_type')" *ngIf="currentPath!=='/admin/summary' && currentPath!=='/admin/district-summary' && currentPath!=='/admin/bdr-summary'">Execution Type</a> -->
+            <!-- <a class="dropdown-item" (click)="filter_by('date')" *ngIf="currentPath!=='/admin/district-summary' && currentPath!=='/admin/bdr-summary'">Date</a> -->
+        </div>
+     
+    </div> 
+
+    <!-- <div *ngIf="!daily_summary" class="number m-3 ml-3 cursor" [ngStyle]="{ color: initialPage==0? 'grey':'black', cursor: initialPage==0? 'not-allowed':'pointer' }" (click)="previous()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    </div> -->
+    <!-- <div *ngIf="!daily_summary" class="number mt-3" style="color: grey; letter-spacing: 2px;">
+        {{initialPage+1 + '-' + finalPage}}
+    </div> -->
+<!-- 
+    <div *ngIf="!daily_summary" class="number cursor" [ngStyle]="{ color: tempData.length >= finalPage? 'black':'grey', cursor: tempData.length>= finalPage? 'pointer':'not-allowed' }" (click)="next()">
+        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+    </div> -->
+
+    <div class="dropdown dropdown ml-5 mt-3">
+        <button class="btn dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Tasks <span style="color: 'grey'; font-size: 10px;">{{currentPath == '/admin/chiller'? ' (Chiller)' : currentPath == '/admin/tsp'? ' (Trophy Stout Poster)' : currentPath == '/admin/tlp'? ' (Trophy Lager Poster)':''}}</span>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            
+            <a [routerLink] = "['/admin/chiller']" class="dropdown-item number cursor" [ngStyle]="{ color: currentPath=='/admin/chiller'? '#db6548' : '' }">
+                <i class="fa fa-building" aria-hidden="true"></i>
+                Chiller
+            </a>
+        
+            <a [routerLink] = "['/admin/tsp']" class="dropdown-item number cursor" [ngStyle]="{ color: currentPath=='/admin/tsp'? '#db6548' : '' }">
+                <i class="fa fa-beer" aria-hidden="true"></i>
+                Trophy Stout Poster
+            </a>
+            
+            <a [routerLink] = "['/admin/tlp']" class="dropdown-item number cursor" [ngStyle]="{ color: currentPath=='/admin/tlp'? '#db6548' : '' }">
+                <i class="fa fa-beer" aria-hidden="true"></i>
+                Trophy Lager Poster
+            </a>
+
+            <a [routerLink] = "['/admin/hlp']" class="dropdown-item number cursor" [ngStyle]="{ color: currentPath=='/admin/hlp'? '#db6548' : '' }">
+                <i class="fa fa-beer" aria-hidden="true"></i>
+                Hero Poster
+            </a>
+
+        </div>
+    </div>
+
+
+    <div class="dropdown dropdown ml-2 mt-3">
+        <button class="btn dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Summary <span style="color: 'grey'; font-size: 10px;">{{currentPath == '/admin/district-summary'? ' (District Summary)' : ''}}</span>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            
+            <a [routerLink] = "['/admin/district-summary']" class="dropdown-item mb-1 number cursor" [ngStyle]="{ color: currentPath=='/admin/district-summary'? '#db6548' : '' }">
+                <!-- <i class="fa fa-building" aria-hidden="true"></i> -->
+                District
+            </a>
+        
+            <a [routerLink] = "['/admin/bdr-summary']" class="dropdown-item number cursor mb-1" [ngStyle]="{ color: currentPath=='/admin/bdr-summary'? '#db6548' : '' }">
+                <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
+                BDR
+            </a>
+            
+        
+            <a [routerLink]="['/admin/summary']" class="dropdown-item number cursor mb-1" [ngStyle]="{ color: (currentPath=='/admin/summary' || currentPath=='/admin' )? '#db6548' : '' }">
+            <i class="fa fa-list-alt" aria-hidden="true"></i>
+            Daily Summary
+            </a>
+        </div>
+    </div>
+
+    <div class="dropdown dropdown ml-2 mt-3">
+        <button class="btn dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Charts 
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            
+            <a [routerLink] = "['/admin/chart','general']" class="dropdown-item mb-1 number cursor" [ngStyle]="{ color: currentPath=='/admin/district-summary'? '#db6548' : '' }">
+                <!-- <i class="fa fa-building" aria-hidden="true"></i> -->
+                General
+            </a>            
+        
+        </div>
+    </div>
+
+
+    <a [routerLink]="['/admin/visualizer']" routerLinkActive="router-link-active"  class="number cursor ml-3 mt-4" [ngStyle]="{ color: (currentPath=='/admin/visualizer' )? '#db6548' : '' }">
+        <i class="fa fa-list-alt" aria-hidden="true"></i>
+        Visualizer
+    </a>
+
+
+    <!-- <div class="mr-auto"></div> -->
+      
+    <div class="time-window mt-3" *ngIf="currentPath!=='/admin' && currentPath!=='/admin/summary'">
+        <input id="dateWindow" style="color:grey; font-size: small; width: 180px" type="text" placeholder="filter by time window" (focus)="timeWindow()" name="daterange" />
+        <!-- <i class="fa fa-calendar mt-1" style="position: absolute; right: 8%;" aria-hidden="true"></i> -->
+    </div>
+
+    <!-- <div class="mt-3 cursor" (click)="refresh()" *ngIf="content && currentPath!=='/admin' && currentPath!=='/admin/summary'">
+        <i class="fa fa-refresh" aria-hidden="true"></i>
+    </div> -->
+
+</div>
+
+<div class="m-1 p-2 contain" *ngIf="content && currentPath=='/admin'">
+    <app-daily-summary></app-daily-summary>
+</div>
+
+<div class="m-1 p-2 contain" *ngIf="!content">
+    <app-admin-login></app-admin-login>
+</div>
+
+<div class="download" (click)="handleTaskDownload()">
+    <i class="fa fa-download"></i>
+</div>

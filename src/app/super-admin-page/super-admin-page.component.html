@@ -1,0 +1,146 @@
+<div class="container">
+    <div class="d-flex justify-content-center h-100">
+      <div class="card">
+        <div class="card-bod p-2">
+          <form *ngIf="!user.content">
+            <span style="color: #000;" class="p-1 pb-2" >Enter Your Email</span
+            >
+            <div class="input-group form-group mt-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text"
+                  ><i class="fa fa-user-circle"></i
+                ></span>
+              </div>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Email"
+                name="email"
+                (keyup) = "keyUpCheck()"
+                [(ngModel)]="user.email"
+              />
+            </div>
+  
+            <span style="color: black;" class="p-1 pb-2" 
+              >Enter Your Password</span
+            >
+            <div class="input-group form-group mt-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-key"></i></span>
+              </div>
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                name="password"
+                (keyup) = "keyUpCheck()"
+                [(ngModel)]="user.password"
+              />
+            </div>        
+  
+           
+          </form>
+
+          <!-- conetnt -->
+          <form *ngIf="user.content">
+            <span style="color: #000;" class="p-1 pb-2" >Outlet Name:</span
+            >
+            <div class="input-group form-group mt-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text"
+                  ><i class="fa fa-address-card"></i
+                ></span>
+              </div>
+              <input
+                type="address"
+                class="form-control"
+                placeholder="Outlet Name Here"
+                name="outlet_name"
+                (keyup)="handleDataKeyUp()"
+                [(ngModel)]="data.outlet_name"
+              />
+            </div>
+  
+            <span style="color: black;" class="p-1 pb-2" 
+              >BDR email</span
+            >
+            <div class="input-group form-group mt-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="BDR Email Here"
+                (keyup)="handleDataKeyUp()"
+                name="bdr_email"
+                [(ngModel)]="data.bdr_email"
+              />
+            </div>        
+
+            <span style="color: black;" class="p-1 pb-2" 
+            >Outlet Latitude:</span
+          >
+          <div class="input-group form-group mt-1">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+            </div>
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Outlet Latitude Here"
+              name="latitude"
+              (keyup)="handleDataKeyUp()"
+              [(ngModel)]="data.latitude"
+            />
+          </div>   
+          
+          <span style="color: black;" class="p-1 pb-2" 
+          >Outlet Longitude</span>
+            <div class="input-group form-group mt-1">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+                </div>
+                <input
+                    type="number"
+                    class="form-control"
+                    placeholder="Outlet Longitude Here"
+                    name="longitude"
+                    (keyup)="handleDataKeyUp()"
+                    [(ngModel)]="data.longitude"
+                />
+            </div>        
+            
+            <button 
+                class="button" 
+                (click)="handleSubmit()"
+                *ngIf="(data.outlet!=='' &&  data.bdr_email!=='' && data.long !== '' && data.lat !== '') && !user.loading"
+                >Update
+            </button>
+            <button 
+                class="button button-disabled" 
+                disabled 
+                *ngIf="(data.outlet=='' ||  data.bdr_email=='' || data.long == '' || data.lat == '') && !user.loading">
+                Update
+            </button>
+            <button 
+                class="button button-disabled" 
+                disabled 
+                *ngIf="user.loading">
+                <img src="https://portal.sftravel.com/login/images/ajax-loader.gif" width="25" alt="Please wait...">
+            </button>
+            
+          </form>
+        
+        </div>
+    
+        <div class="text-danger text-center text-sm mt-3" *ngIf="user.success==false">
+            Incorrect Outlet name/BDR email.
+        </div>
+        <div class="text-success bg-light text-center text-sm mt-3" *ngIf="user.success==true">
+            Coordinate Updated!
+        </div>
+        
+      </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="container _content">
+    <div class="d-flex justify-content-center h-100">
+        <div class="card">
+            <div class="card-head mt-2 mb-1 p-3 pl-0" style="background-color: rgba(167, 167, 167, 0.33); border: 1px solid wheat; color: white; font-size: 18px;">
+                <i class="fa fa-arrow-left" style="color: white;" *ngIf="!search_" aria-hidden="true" (click)="backFunc()"></i>
+                <i class="fa fa-arrow-left" style="color: white;" aria-hidden="true" *ngIf="search_" (click)="backToDash()"></i>
+                <span class="offset-3">My Dashboard</span>
+            </div>
+            <div class="card-head mt-1 mb-2 p-2 pl-0 text-center" style="background-color: rgba(167, 167, 167, 0.33); border: 1px solid wheat; color: white; font-size: 18px;">
+                <label for="searchThis">{{ notice }}</label>
+                <input type="search" class="form-control" name="searchThis" placeholder="search here!" id="" (keyup)="search($event)">
+            </div>
+            
+            <div class="card-bod p-3 mt-1" *ngIf="!search_">
+                <div class="text-center text-justify">
+                    Chiller
+                </div>
+                <div class="row">
+                    <a [routerLink] = "['/summary', '0', '0']" class="col-6 text-center p-2" style="border-right: 2px solid wheat;">
+                        <span>{{taskEval.completedChillerExecution}}%</span><br />
+                        Pocs Completed
+                    </a>
+                    <a [routerLink] = "['/summary', '1', '0']" class="col-6 ml-auto text-center p-2" style="border-left: 2px solid wheat;">
+                        <span>{{taskEval.goodChillerExecution}}%</span><br />
+                        Good Execution
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-bod p-3 mt-1" *ngIf="!search_">
+                <div class="text-center text-justify">
+                    Trophy Stout Price Poster
+                </div>
+                <div class="row">
+                    <a [routerLink] = "['/summary', '0', '1']" class="col-6 text-center p-2" style="border-right: 2px solid wheat;">
+                        <span>{{taskEval.completedPosterExecution}}%</span><br />
+                        Pocs Completed
+                    </a>
+                    <a [routerLink] = "['/summary', '1', '1']" class="col-6 ml-auto text-center p-2" style="border-left: 2px solid wheat;">
+                        <span>{{taskEval.goodPosterExecution}}%</span><br />
+                        Good Execution
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-bod p-3 mt-1" *ngIf="!search_ && (data[0].region == 'Lagos & West-I' || data[0].region == 'North & West-II')">
+                <div class="text-center text-justify">
+                    Trophy Lager Price Poster
+                </div>
+                <div class="row">
+                    <a [routerLink] = "['/summary', '0', '2']" class="col-6 text-center p-2" style="border-right: 2px solid wheat;">
+                        <span>{{taskEval.completedChairExecution}}%</span><br />
+                        Pocs Completed
+                    </a>
+                    <a [routerLink] = "['/summary', '1', '2']" class="col-6 ml-auto text-center p-2" style="border-left: 2px solid wheat;">
+                        <span>{{taskEval.goodChairExecution}}%</span><br />
+                        Good Execution
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-bod p-3 mt-1" *ngIf="!search_ && (data[0].region == 'North & West-II' || data[0].region == 'South & East')">
+                <div class="text-center text-justify">
+                    Hero Price Poster
+                </div>
+                <div class="row">
+                    <a [routerLink] = "['/summary', '0', '3']" class="col-6 text-center p-2" style="border-right: 2px solid wheat;">
+                        <span>{{taskEval.completedHeroExecution}}%</span><br />
+                        Pocs Completed
+                    </a>
+                    <a [routerLink] = "['/summary', '1', '3']" class="col-6 ml-auto text-center p-2" style="border-left: 2px solid wheat;">
+                        <span>{{taskEval.goodHeroExecution}}%</span><br />
+                        Good Execution
+                    </a>
+                </div>
+            </div>
+
+            <div *ngIf="search_">
+                <app-search [searchResult] = "searchResult"></app-search>
+            </div>
+
+        </div>
+    </div
+></div>

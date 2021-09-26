@@ -1,0 +1,17 @@
+div:first-child {
+    // position: fixed;
+    // bottom: 0;
+    margin: 0 0 2px 3px;
+}
+
+button {
+    border: 1px solid #da2323;
+    background-color: #da2323;
+    color: white;
+}
+
+button:hover {
+    border: 1px solid white;
+    background-color: white;
+    color: #da2323;
+} 

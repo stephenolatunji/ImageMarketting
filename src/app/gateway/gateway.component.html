@@ -1,0 +1,161 @@
+<!-- Modal -->
+<!-- <div class="modal fade" id="isOutletOpen" tabindex="-1" role="dialog" aria-labelledby="isOutletOpenTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img src="/assets/images/logo.png" height="50"  alt="">
+        <h5 class="modal-title ml-2 mt-2" id="isOutletOpenTitle">Outlet Status</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true" class="mt-4">&times;</span> 
+        </button>
+      </div>
+      <div class="modal-body">
+        Hello!<br /><br />
+        <strong>Is this outlet open?</strong>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn col-4 btn-success" (click)="outletStatus(1)">Yes</button>
+        <button type="button" class="btn col-4 btn-secondary" (click)="outletStatus(0)">No</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- notfier -->
+<app-notify [notification_msg] = "notification_msg"></app-notify>
+
+<!-- isChiilerPresent -->
+<div class="modal fade" id="isChillerPresent" tabindex="-1" role="dialog" aria-labelledby="isChillerPresentTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <i class="fa fa-arrow-left mt-3" aria-hidden="true" (click)="back()"></i>
+        <h5 class="modal-title offset-1 mt-2" id="isChillerPresentTitle">Chiller Status</h5>
+        <div></div>
+      </div>
+      <div class="modal-body">
+        <br />
+        <strong>Is IBPLC Chiller Present in this outlet?</strong>
+      </div>
+      <div class="modal-footer">
+        <img src="/assets/images/logo.png" class="offset-1" height="30"  alt="">
+        <button type="button" class="btn col-4 btn-secondary" (click)="chillerStatus(0)">No</button>
+        <button type="button" class="btn col-4 btn-success" (click)="chillerStatus(1)">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- other survey question -->
+<div class="modal fade" id="otherSurvey" tabindex="-1" role="dialog" aria-labelledby="otherSurveyTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form class="modal-content" (submit)="submit()">
+
+      <div class="modal-header">
+        <i class="fa fa-arrow-left mt-3" aria-hidden="true" (click)="back()"></i>
+        <h5 class="modal-title offset-1 mt-2" id="isChillerPresentTitle">Survey Questions</h5> 
+        <div></div>
+      </div>
+      <span class="text-danger text-center" style="font-size: 12px;" *ngIf="err" > Please answer all the Survey Questions!</span>
+
+      <div class="modal-body">
+        <ol class="list-group" *ngIf="message.chillerPresence=='Yes'">
+            <li class="list-group-item"> 
+                <span>How many IBPLC Chiller(s) is/are in this Outlet?</span>
+            </li>
+            <li class="list-group-item text-center"> 
+              <input type="radio" id="one" name="how_many_chiller" value="1" [(ngModel)]="survey.how_many_chiller">
+              <label for="one" class="ml-2">1</label> 
+              <input type="radio" class="offset-2" id="two" name="how_many_chiller" value="2" [(ngModel)]="survey.how_many_chiller">
+              <label for="two" class="ml-2">2</label>
+              <input type="radio" class="offset-2" id="three" name="how_many_chiller" value="3" [(ngModel)]="survey.how_many_chiller">
+              <label for="three" class="ml-2">3</label><br>  
+              
+            </li>
+        </ol>
+
+        <ol class="survey list-group" *ngIf="message.chillerPresence=='Yes'">
+          <li class="list-group-item "> 
+              <!-- <span class="font-weight-bold mr-3">4.</span> -->
+              <span>What is the Chiller Status?</span>  
+          </li>
+          <li class="list-group-item text-center"> 
+              <input type="radio" id="working" name="cooler_status" value="working" [(ngModel)]="survey.cooler_status">
+              <label for="working" class="ml-2">Working</label>
+              <input type="radio" class="offset-1" id="not_working" name="cooler_status" value="not_working" [(ngModel)]="survey.cooler_status">
+              <label for="not_working" class="ml-2">Not Working</label> <br>  
+          </li>
+        </ol> 
+
+        <ol class="survey list-group" >
+          <li class="list-group-item "> 
+              <!-- <span class="font-weight-bold mr-3">6.</span> -->
+              <span>How many Cases of IBPLC products are being purchased weekly?</span>  
+          </li>
+          <li class="list-group-item text-center"> 
+              <input type="number" placeholder="0" id="how_many_ibl_weekly" name="how_many_ibl_weekly" autofocus style="border: 0; color: #f20707;" [(ngModel)]="survey.how_many_ibl_weekly">
+          </li>
+        </ol>
+
+        <ol class="survey list-group">
+              
+          <li class="list-group-item "> 
+              <!-- <span class="font-weight-bold mr-3">7.</span> -->
+              <span>Is there a competitor Chiller in this Outlet?</span>  
+              
+          </li>
+          <li class="list-group-item text-center"> 
+              <input type="radio" id="yes" name="competitor_chiller" value="yes" [(ngModel)]="survey.competitor_chiller"> 
+              <label for="yes" class="offset-1">Yes</label>
+              <input type="radio" class="offset-2" id="no" name="competitor_chiller" value="no" [(ngModel)]="survey.competitor_chiller">
+              <label for="no" class="offset-1">No</label>
+          </li>
+        </ol>
+        
+        <ol class="survey list-group" >
+            <li class="list-group-item "> 
+                <!-- <span class="font-weight-bold mr-3">5.</span> -->
+                <span>How many Cases of Competitor brands are being purchased weekly?</span>  
+            </li>
+            <li class="list-group-item text-center"> 
+                <input type="number" placeholder="0" id="cases_of_competitor_brand_weekly" name="cases_of_competitor_brand_weekly" autofocus style="border: 0; color: #f20707;" [(ngModel)]="survey.cases_of_competitor_brand_weekly">
+            </li>
+        </ol>
+  
+      </div>
+
+      <div class="modal-footer">
+        <img src="/assets/images/logo.png" class="offset-1" height="30"  alt="">
+        <button type="submit" class="btn col-4 btn-success">Submit</button>
+        <!-- <button type="button" class="btn col-4 btn-secondary" (click)="chillerStatus(0)">No</button> -->
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- snapType-->
+<div class="modal fade" id="snapType" tabindex="-1" role="dialog" aria-labelledby="snapTypeTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <i class="fa fa-arrow-left mt-3" aria-hidden="true" (click)="back()"></i>
+        <h5 class="modal-title mt-2" id="snapTypeTitle">Capture Type</h5>
+        <div></div>
+      </div>
+      <div class="modal-body">
+        <ol class="list-group">
+          <li class="list-group-item"> 
+              <span>What type of chiller capture would you like to create?</span>
+          </li>
+          <li class="list-group-item d-flex"> 
+
+            <input type="button" class="btn col-5" style="background-color: grey; color: white;" (click)="snapTypeFunc('stitched')" value="Stitched">
+            <input type="button" class="btn col-5 ml-auto" style="background-color: green; color: white;" (click)="snapTypeFunc('single')" value="Single">
+           
+            <br>  
+            
+          </li>
+      </ol>
+      </div>
+  </div>
+</div>

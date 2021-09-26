@@ -1,0 +1,467 @@
+<app-admin></app-admin>
+<div class="modal-body ">
+    <div  class="d-flex text-center" *ngIf="!loading">
+        <!-- <div *ngIf="!loading" class="d-flex text-center"> -->
+        
+        <div class="col-4 img-container">
+            <img src={{dataToVisualize?.image}} alt="image-visualizer" width="430" height="550">
+            <!-- <img src="assets/hello.jpeg" alt="image-visualizer" width="430" height="550"> -->
+            <img 
+            *ngFor="let list of lists; let i = index"
+            class="pointer animate__animated animate__flash" 
+            src="assets/plain_logo.png" 
+            alt=""
+            [style.top]="list[1]+'px'"
+            [style.left]="list[0]+8+'px'"
+            >
+            
+        </div>
+        
+        <div class="close-pointer col-1" (click) = "closePointerFunc()" >
+            <div *ngIf="lists.length>0">
+                <img src="assets/images/close.png" width="20" height="20" alt="">Clear Pointers
+            </div>
+        </div>
+    
+        <div class="col-7">
+    
+            <nav class="navbar navbar-expand-sm d-flex">
+                <!-- Brand/logo -->
+                <a class="navbar-brand mr-auto" href="#" class="text-light"><img src="/assets/images/logo.png" alt="" height="40"></a> 
+                <i class="fa fa-arrow-left ml-auto" aria-hidden="true" (click)="next_previous('previous', dataToVisualize?.taskType)"></i>                   
+                <i class="fa fa-arrow-right offset-1 mr-(3)" aria-hidden="true" (click)="next_previous('next',  dataToVisualize?.taskType)"></i>                   
+            </nav>
+    
+            <div class="dataBody text-justify row">
+                <div class="col-6">
+                    <div class="d-flex mt-2">
+                        <div class="mr-auto"></div>
+                        <div class="font-weight-bold">Task Details</div>
+                        <div class="ml-auto"></div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            S/N
+                        </div>
+                        <div class="col-6" style="font-weight: 500;" class="text-justify">
+                            {{ dataToVisualize?.index+1 }}
+                        </div>
+                    </div>
+                    <div class="row mt-1 pt-1">
+                        <div class="col-6">
+                            BDR
+                        </div>
+                        <div class="col-6" style="font-weight: 500;" class="text-justify">
+                            {{ dataToVisualize?.name }}
+                        </div>
+                    </div>
+                    <div class="row mt-1 pt-1">
+                        <div class="col-6">
+                            Poc Name
+                        </div>
+                        <div class="col-6" style="font-weight: 500; white-space: nowrap;" class="text-justify">
+                            {{ dataToVisualize?.outlet }}
+                        </div>
+                    </div>
+                    <div class="row mt-1 pt-1">
+                        <div class="col-6">
+                            Poc Id
+                        </div>
+                        <div style="font-weight: 500;" class="text-justify">
+                            {{ dataToVisualize?.pocId }}
+                        </div>
+                    </div>
+                    <div class="row mt-1 pt-1">
+                        <div class="col-6">
+                            District
+                        </div>
+                        <div style="font-weight: 500;" class="text-justify">
+                            {{ dataToVisualize?.district }}
+                        </div>
+                    </div>
+                    <div class="row mt-1 pt-1">
+                        <div class="col-6">
+                            Task
+                        </div>
+                        <div style="font-weight: 500;" class="text-justify">
+                            {{ dataToVisualize?.taskType == 'poster'? 'Trophy Stout Poster' : dataToVisualize?.taskType == 'chair'?  'Trophy Lager Poster' : dataToVisualize?.taskType == 'chiller'? 'Chiller' : ''}}
+                        </div>
+                    </div>
+                    <div class="row mt-1 pt-1">
+                        <div class="col-6">
+                            Date
+                        </div>
+                        <div style="font-weight: 500;" class="text-justify">
+                            {{ dataToVisualize?.date.slice(0, 10) }}
+                        </div>
+                    </div>
+        
+                    <!-- Display if chiller -->
+                    <div *ngIf="dataToVisualize?.taskType=='chiller'">
+        
+                        <div class="row mt-1 pt-1">
+                            <div class="col-6">
+                                Contaminated
+                            </div>
+                            <div style="font-weight: 500;" class="text-justify">
+                                {{ dataToVisualize?.contaminated==true? 'Yes':dataToVisualize?.contaminated==''? 'Nil' : 'No'}}
+                            </div>
+                        </div>
+                        <div class="row mt-1 pt-1">
+                            <div class="col-6" style="white-space: nowrap;">
+                                White Space Condition
+                            </div>
+                            <div style="font-weight: 500;" class="text-justify">
+                                {{ dataToVisualize?.white_space==true? 'Yes':dataToVisualize?.white_space==''? 'Nil' : 'No'}}
+                            </div>
+                        </div>
+                        <div class="row mt-1 pt-1">
+                            <div class="col-6" style="white-space: nowrap;">
+                                Percentage White Space
+                            </div>
+                            <div style="font-weight: 500;" class="text-justify">
+                                {{ dataToVisualize?.white_space_perc }}{{ dataToVisualize?.white_space_perc!==null?  '%' : ''}}
+                            </div>
+                        </div>
+                        <div class="row mt-1 pt-1">
+                            <div class="col-6">
+                                Glass/Chest
+                            </div>
+                            <div style="font-weight: 500;" class=" text-justify">
+                                {{ dataToVisualize?.chest==1? 'Chest' : dataToVisualize?.glass==1? 'Glass' : '--' }}
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- display on when chiller exists -->
+                    <div class="row mt-1 pt-1" *ngIf="dataToVisualize?.taskType=='chiller'">
+                    <div class="col-6">
+                        Chiller Presence
+                    </div>
+                    <div [ngStyle]="{'font-weight': '500', 'padding': '1px 10px 1px 10px', 'border-radius': '20px', 'color': 'white', 'background':  dataToVisualize?.chillerPresent=='Yes'? 'green' : dataToVisualize?.chillerPresent=='No'? 'red' : 'purple' }" class="text-justify">
+                        {{ dataToVisualize?.chillerPresent=='undefined'? '--': dataToVisualize?.chillerPresent }}
+                    </div>
+                    </div>
+                    <div class="row mt-1 pt-1" *ngIf="dataToVisualize?.taskType=='chiller'">
+                        <div class="col-6">
+                            Chiller Status
+                        </div>
+                        <div [ngStyle]="{'font-weight': '500', 'padding': '1px 10px 1px 10px', 'border-radius': '20px', 'color': 'white', 'background':  dataToVisualize?.coolerStatus=='working'? 'green' : dataToVisualize?.coolerStatus=='not_working'? 'red' : 'purple' }" class="text-justify">
+                            {{ dataToVisualize?.coolerStatus=='undefined' || dataToVisualize?.coolerStatus=='null'? '--':dataToVisualize?.coolerStatus=='not_working'? 'Not Working':dataToVisualize?.coolerStatus=='working'? 'Working':'NA' }}
+                        </div>
+                    </div>
+                    <!-- end -->
+    
+                    <div class="row mt-1 pt-1">
+                        <div class="col-6">
+                            Well Executed
+                        </div>
+                        <div [ngStyle]="{'font-weight': '500', 'padding': '1px 10px 1px 10px', 'border-radius': '20px', 'color': 'white', 'background':  dataToVisualize?.action=='success'? 'green' : dataToVisualize?.action=='bad'? 'red' : 'purple' }" class="text-justify">
+                            {{ (dataToVisualize?.action=='success')? 'Yes': dataToVisualize?.action=='bad'? 'No': dataToVisualize?.action=='Awaiting AI'? 'Awaiting AI' : '' }}
+                        </div>
+                    </div>
+        
+                </div>
+            
+                <div class="col-6" *ngIf="dataToVisualize?.taskType=='chiller'">
+                    
+                    <div class="d-flex mt-2">
+                        <div class="mr-auto"></div>
+                        <div class="font-weight-bold">Products ({{totalSummation}})</div>
+                        <div class="ml-auto"></div>
+                    </div>
+            
+                    <div class="col-12">
+                        <mat-expansion-panel (opened)="panelOpenState = true"(closed)="panelOpenState = false">
+    
+                            <mat-expansion-panel-header>
+    
+                                <mat-panel-title>
+                                    Budweiser
+                                </mat-panel-title>
+    
+                                <mat-panel-description>
+                                    ({{dataToVisualize?.budTotal}})
+                                </mat-panel-description>
+    
+                            </mat-expansion-panel-header>
+                            
+                            <div class="d-flex" (mouseover)="pointerFunc('budweiser', dataToVisualize?.taskId)">
+    
+                                <div class="mr-auto" style="white-space: nowrap;">
+                                    Budweiser (RGB)
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify mt-2">
+                                    {{ dataToVisualize?.budweiser==0 || dataToVisualize?.budweiser==null? '0' : dataToVisualize?.budweiser }}   
+                                </div>
+    
+                            </div>
+    
+                            <div class="d-flex" (mouseover)="pointerFunc('bud_can', dataToVisualize?.taskId)">
+                                <div class="mr-auto">
+                                    Budweiser (Can)
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify  mt-2">{{ dataToVisualize?.budweiser_can==0 || dataToVisualize?.budweiser_can==null? '0' : dataToVisualize?.budweiser_can }}</div>
+                            </div>
+                            
+                        </mat-expansion-panel>
+                    </div>
+                    
+                    <div class="col-12">
+                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Trophy Stout
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                ({{ dataToVisualize?.trophy_stout==0 || dataToVisualize?.trophy_stout==null? '0' : dataToVisualize?.trophy_stout }})
+                            </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            
+                            <div class="d-flex" (mouseover)="pointerFunc('trophy_stout', dataToVisualize?.taskId)">
+    
+                                <div class="mr-auto" style="white-space: nowrap;">
+                                    Trophy Stout (RGB)
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify mt-2">
+                                    {{ dataToVisualize?.trophy_stout==0 || dataToVisualize?.trophy_stout==null? '0' : dataToVisualize?.trophy_stout }}
+                                </div>
+    
+                            </div>
+                            
+                        </mat-expansion-panel>
+                        
+                    </div>
+    
+                    <div class="col-12">
+                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Trophy Lager
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                ({{dataToVisualize?.trophyLagerTotal}})
+                            </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            
+                            <div class="d-flex" (mouseover)="pointerFunc('trophy', dataToVisualize?.taskId)">
+    
+                                <div class="mr-auto" style="white-space: nowrap;">
+                                    Trophy Lager (RGB)
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify mt-2">
+                                    {{ dataToVisualize?.trophy==0 || dataToVisualize?.trophy==null? '0' : dataToVisualize?.trophy }}
+                                </div>
+                            </div>
+                            <div class="d-flex" (mouseover)="pointerFunc('trophy_can', dataToVisualize?.taskId)">
+    
+                                <div class="mr-auto" style="white-space: nowrap;">
+                                    Trophy Lager (Can)
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify mt-2">
+                                    {{ dataToVisualize?.trophy_can==0 || dataToVisualize?.trophy_can==null? '0' : dataToVisualize?.trophy_can }}
+                                </div>
+    
+                            </div>
+                            
+                        </mat-expansion-panel>
+                        <!-- <div class="col-6">
+                            Trophy Can
+                        </div>
+                        <div style="font-weight: 500;" class=" text-justify">{{ dataToVisualize?.trophy_can==0 || dataToVisualize?.trophy_can==null? '0' : dataToVisualize?.trophy_can }}</div> -->
+                    </div>
+    
+                    <div class="col-12">
+                        <mat-expansion-panel (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Beta Malt
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                ({{dataToVisualize?.betaMaltTotal}})
+                            </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            
+                            <div class="d-flex" (mouseover)="pointerFunc('beta_malt', dataToVisualize?.taskId)">
+    
+                                <div class="mr-auto" style="white-space: nowrap;">
+                                    Beta Malt (RGB)
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify mt-2">
+                                    {{ dataToVisualize?.beta_malt==0 || dataToVisualize?.beta_malt==null? '0' : dataToVisualize?.beta_malt }}
+                                </div>
+    
+                            </div>
+    
+                            <div class="d-flex" (mouseover)="pointerFunc('beta_can', dataToVisualize?.taskId)">
+                                <div class="mr-auto">
+                                    Beta Malt (Can)
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify mt-2">
+                                    {{ dataToVisualize?.beta_can==0 || dataToVisualize?.beta_can==null? '0' : dataToVisualize?.beta_can }}
+                                </div>
+                            </div>
+                            
+                        </mat-expansion-panel>
+                    </div>
+    
+                    <div class="col-12">
+                        <mat-expansion-panel (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Eagle
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                ({{dataToVisualize?.eagleTotal}})
+                            </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            
+                            <div class="d-flex" (mouseover)="pointerFunc('eagle', dataToVisualize?.taskId)">
+    
+                                <div class="mr-auto" style="white-space: nowrap;">
+                                    Eagle Lager
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify mt-2">
+                                    {{ dataToVisualize?.eagle==0 || dataToVisualize?.eagle==null? '0' : dataToVisualize?.eagle }}
+                                </div>
+    
+                            </div>
+    
+                            <div class="d-flex" (mouseover)="pointerFunc('eagle_stout', dataToVisualize?.taskId)">
+                                <div class="mr-auto">
+                                    Eagle Stout
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify mt-2">
+                                    {{ dataToVisualize?.eagle_stout==0 || dataToVisualize?.eagle_stout==null? '0' : dataToVisualize?.eagle_stout }}
+                                </div>
+                            </div>
+                            
+                        </mat-expansion-panel>
+                    </div>
+    
+                    <div class="col-12">
+                        <mat-expansion-panel (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Grand Malt
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                ({{dataToVisualize?.grandMaltTotal}})
+                            </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            
+                            <div class="d-flex" (mouseover)="pointerFunc('grand_malt', dataToVisualize?.taskId)">
+    
+                                <div class="mr-auto" style="white-space: nowrap;">
+                                    Grand Malt (RGB)
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify mt-2">
+                                    {{ dataToVisualize?.grand_malt==0 || dataToVisualize?.grand_malt==null? '0' : dataToVisualize?.grand_malt }}
+                                </div>
+    
+                            </div>
+    
+                            <div class="d-flex" (mouseover)="pointerFunc('grand_can', dataToVisualize?.taskId)">
+                                <div class="mr-auto">
+                                    Grand Malt (Can)
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify mt-2">
+                                    {{ dataToVisualize?.grand_can==0 || dataToVisualize?.grand_can==null? '0' : dataToVisualize?.grand_can }}
+                                </div>
+                            </div>
+                            
+                        </mat-expansion-panel>
+                    </div>
+    
+    
+                    <div class="col-12">
+                        <mat-expansion-panel (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Hero
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                ({{dataToVisualize?.heroTotal}})
+                            </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            
+                            <div class="d-flex" (mouseover)="pointerFunc('hero', dataToVisualize?.taskId)">
+    
+                                <div class="mr-auto" style="white-space: nowrap;">
+                                    Hero (RGB)
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify mt-2">
+                                    {{ dataToVisualize?.hero==0 || dataToVisualize?.hero==null? '0' : dataToVisualize?.hero }}
+                                </div>
+    
+                            </div>
+    
+                            <div class="d-flex" (mouseover)="pointerFunc('hero_can', dataToVisualize?.taskId)">
+                                <div class="mr-auto">
+                                    Hero (Can)
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify mt-2">
+                                    {{ dataToVisualize?.hero_can==0 || dataToVisualize?.hero_can==null? '0' : dataToVisualize?.hero_can }}
+                                </div>
+                            </div>
+                            
+                        </mat-expansion-panel>
+                    </div>
+    
+                    <div class="col-12">
+                        <mat-expansion-panel (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Castle Lite
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                ({{ dataToVisualize?.castle_lite==0 || dataToVisualize?.castle_lite==null? '0' : dataToVisualize?.castle_lite }})
+                            </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            
+                            <div class="d-flex" (mouseover)="pointerFunc('castle_lite', dataToVisualize?.taskId)">
+    
+                                <div class="mr-auto" style="white-space: nowrap;">
+                                    Castle Lite
+                                </div>
+                                <div style="font-weight: 500;" class=" text-justify mt-2">
+                                    {{ dataToVisualize?.castle_lite==0 || dataToVisualize?.castle_lite==null? '0' : dataToVisualize?.castle_lite }}
+                                </div>
+    
+                            </div>
+                            
+                        </mat-expansion-panel>
+                    </div>
+
+
+                    <app-feedback [taskId] = "dataToVisualize?.taskId"></app-feedback>
+
+
+                </div>
+    
+                <!-- display image to occupy whitespace only for poster -->
+                <div class="text-center mt-5 col-6" *ngIf="dataToVisualize?.taskType !== 'chiller'">
+                    <img src="/assets/images/logo.png" alt="eyemarket" height="120">
+                </div>
+                
+            </div>
+    
+        </div>
+    </div>
+    
+    <div *ngIf="loading" class="loading">
+        <img src="https://portal.sftravel.com/login/images/ajax-loader.gif" width="40" alt="">
+        <div class="mt-1">loading...</div>
+    </div>
+
+    <app-notify [notification_msg] = "notification_msg"></app-notify>
+</div>
+
+
+       

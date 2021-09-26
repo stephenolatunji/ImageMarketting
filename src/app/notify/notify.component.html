@@ -1,0 +1,14 @@
+<div class="modal fade" id="notify" tabindex="-1" role="dialog" aria-labelledby="notifyTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content text-center">
+            <div class="modal-body text-center text-success" *ngIf="notification_msg.success">
+                {{notification_msg.msg}}
+            </div>
+            <div class="modal-body text-center text-danger" *ngIf="!notification_msg.success">
+                {{notification_msg.msg}}
+            </div>
+            <div class="modal-footer-centered" *ngIf="notification_msg.cameraComponent" (click)="hide()">
+                <span class="button">Okay</span>
+            </div>
+        </div>
+  </div>

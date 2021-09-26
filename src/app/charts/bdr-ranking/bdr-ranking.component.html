@@ -1,0 +1,18 @@
+<div *ngFor="let item of bdrData" class="mt-3 bdr_ranking p-3 pb-4">
+    <div class="d-flex">
+        <h6 class="mr-auto">{{item.email}}</h6>
+        <h6>#Total: {{item.totalTaskExec}}</h6>
+    </div>
+    <div class="d-flex">
+        <h6>#Good: {{item.totalGoodExec}}</h6>
+        <h6 class="ml-auto">#Bad: {{item.totalBadExec}}</h6>
+    </div>
+    
+    <div
+    [style.background-color]= "item.totalTaskExec == 0? 'grey': 'rgba(255, 0, 0, 0.8)'" 
+    class="contain">
+
+        <div [style.width]= "item.percGood + '%'"  class="pt-2 good"> </div>
+
+    </div>
+</div>

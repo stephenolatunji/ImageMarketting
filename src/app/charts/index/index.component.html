@@ -1,0 +1,43 @@
+<app-admin></app-admin>
+<div class="row head" *ngIf="bdrRank">
+    <div class="offset-1 text-dark" (click)="backFunc()"><i class="fa fa-arrow-left"></i> Go Back</div>
+    <div class="offset-4">Source: Poc Eye {{month + ' '+ year}}</div>
+</div>
+
+<div class="head" *ngIf="!bdrRank">
+    <div class="text-center">Source: Poc Eye {{month + ' '+ year}}</div>
+</div>
+
+<div class="contain" *ngIf="!bdrRank">
+        
+    <div *ngIf="loading" class="text-center">
+        <img src="https://portal.sftravel.com/login/images/ajax-loader.gif" width="40" alt="">
+    </div>
+
+    <div class="first-row">
+        <div class="general">
+            <app-general></app-general>  
+        </div>
+        <div class="bdr-ranking hover-effect" (click)="bdrRank=true">
+            <app-bdr-ranking [bdrData]="bdrRankingData"></app-bdr-ranking>                 
+        </div>
+    </div>
+    <div class="first-row mt-5">
+        <div class="sku-availability">
+            <app-sku-availability></app-sku-availability>
+        </div>
+        <div class="bdr-weekly">
+            <app-bdr-per-week></app-bdr-per-week>
+        </div>
+    </div>
+    <div class="first-row mt-5 d-none">
+        <div class="availability-segent">
+            <app-availability-segment></app-availability-segment>
+        </div>
+
+    </div>
+
+</div>
+
+<app-bdr-ranking-page *ngIf="bdrRank" [data]="bdrRankingData"></app-bdr-ranking-page>
+

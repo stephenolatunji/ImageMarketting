@@ -1,0 +1,78 @@
+<app-admin></app-admin>
+
+<div class="m-1 p-2 mt-0 contain">
+    <table class="table">
+        <thead style="border-bottom: 7px solid grey; font-size: 10px;">
+            <tr class="text-center">
+                <th>s/n</th>
+                <th style="white-space: nowrap;">Poc Id</th>
+                <th style="white-space: nowrap;">Task Id</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>BDR</th>
+                <th>District</th>
+                <th style="white-space: nowrap;" class="text-center">Chiller Presence</th>
+                <th style="white-space: nowrap;" class="text-center">Outlet Status</th>
+                <th style="white-space: nowrap;" class="text-center">Well Executed</th>
+                <th style="white-space: nowrap;" class="text-center" >Glass/Chest</th>
+                <th style="white-space: nowrap;" class="text-center" >White Space</th>
+                <th class="text-center" >Contaminated</th>
+                <th style="white-space: nowrap;" class="text-center" >Budweiser</th>
+                <th style="white-space: nowrap;" class="text-center" >Bud Can</th>
+                <th style="white-space: nowrap;" class="text-center" >Trophy Can</th>
+                <th class="text-center" >Trophy Lager</th>
+                <th style="white-space: nowrap;" class="text-center" >Trophy Stout</th>
+                <th style="white-space: nowrap;" class="text-center" >Beta Malt</th>
+                <th style="white-space: nowrap;" class="text-center" >Beta Can</th>
+                <th style="white-space: nowrap;" class="text-center" >Castle Lite</th>
+                <th style="white-space: nowrap;" class="text-center" >Eagle</th>
+                <th style="white-space: nowrap;" class="text-center" >Eagle Stout</th>
+                <th style="white-space: nowrap;" class="text-center" >Grand Can</th>
+                <th style="white-space: nowrap;" class="text-center" >Grand Malt</th>
+                <th style="white-space: nowrap;" class="text-center" >Hero</th>
+                <th style="white-space: nowrap;" class="text-center" >Hero Can</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+
+        <tbody *ngIf="!loading">
+            <tr class="text-center" *ngFor="let data of trimmedData_; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{ data?.pocId }}</td>
+                <td>{{ data?.taskId }}</td>
+                <td style="white-space: nowrap;">{{ data?.date.slice(0,10) }}</td>
+                <td style="white-space: nowrap;">{{ data?.time }}</td>
+                <td style="white-space: nowrap;">{{ data?.name }}</td>
+                <td style="white-space: nowrap;">{{ data?.district }}</td>
+                <td [ngStyle]="{color: data?.chillerPresent=='Yes' ? 'green' : data?.chillerPresent=='No-idea' ? 'purple' : 'red'}">{{ data?.chillerPresent=='undefined'? '--':data?.chillerPresent }}</td>
+                <td [ngStyle]="{color: data?.outletStatus=='Open' ? 'green' : 'red'}">{{ data?.outletStatus=='undefined'? '--':data?.outletStatus }}</td>
+                <td [ngStyle]="{color: (data?.action=='success' || data?.action=='good')? 'green' : data?.action=='bad'? 'red' : 'purple'}">{{ (data?.action=='success' || data?.action=='good')? 'Yes': data?.action=='bad'? 'No': 'Awaiting AI' }}</td>
+                <td >{{ data?.glass==1? 'Glass' : data?.chest==1? 'Chest' : '--' }}</td>
+                <td  [ngStyle]="{color: data?.white_space==true ? 'green' : data?.white_space==''? '' : 'red'}">{{ data?.white_space==true? 'Yes': data?.white_space==''? 'Nil' : 'No' }}</td>
+                <td  [ngStyle]="{color: data?.contaminated==true ? 'green' : data?.contaminated==''? '' : 'red'}">{{ data?.contaminated==true? 'Yes':data?.contaminated==''? 'Nil' : 'No'}}</td>
+                <td  style="font-weight: bold;">{{ data?.budweiser==0 || data?.budweiser==null? '-' : data?.budweiser }}</td>
+                <td  style="font-weight: bold;">{{ data?.budweiser_can==0 || data?.budweiser_can==null? '-' : data?.budweiser_can }}</td>
+                <td  style="font-weight: bold;">{{ data?.trophy_can==0 || data?.trophy_can==null? '-' : data?.trophy_can }}</td>
+                <td  style="font-weight: bold;">{{ data?.trophy==0 || data?.trophy==null? '-' : data?.trophy }}</td>
+                <td  style="font-weight: bold;">{{ data?.trophy_stout==0 || data?.trophy_stout==null? '-' : data?.trophy_stout }}</td>
+                <td  style="font-weight: bold;">{{ data?.beta_malt==0 || data?.beta_malt==null? '-' : data?.beta_malt }}</td>
+                <td  style="font-weight: bold;">{{ data?.beta_can==0 || data?.beta_can==null? '-' : data?.beta_can }}</td>
+                <td  style="font-weight: bold;">{{ data?.castle_lite==0 || data?.castle_lite==null? '-' : data?.castle_lite }}</td>
+                <td  style="font-weight: bold;">{{ data?.eagle==0 || data?.eagle==null? '-' : data?.eagle }}</td>
+                <td  style="font-weight: bold;">{{ data?.eagle_stout==0 || data?.eagle_stout==null? '-' : data?.eagle_stout }}</td>
+                <td  style="font-weight: bold;">{{ data?.grand_can==0 || data?.grand_can==null? '-' : data?.grand_can }}</td>
+                <td  style="font-weight: bold;">{{ data?.grand_malt==0 || data?.grand_malt==null? '-' : data?.grand_malt }}</td>
+                <td  style="font-weight: bold;">{{ data?.hero==0 || data?.hero==null? '-' : data?.hero }}</td>
+                <td  style="font-weight: bold;">{{ data?.hero_can==0 || data?.hero_can==null? '-' : data?.hero_can }}</td>
+                <!-- <td (click)="copyFunc(data?.image)" style="white-space: nowrap;"><i class="fa fa-copy"></i> copy</td> -->
+                <td style="white-space: nowrap;"><a href="{{data?.image}}"> <i class="fa fa-picture-o"></i> click</a></td>
+            </tr>
+        </tbody>
+
+        <div *ngIf="loading">
+            <img src="https://portal.sftravel.com/login/images/ajax-loader.gif" width="40" alt="">
+            <div class="mt-4 ml-1">loading...</div>
+        </div>
+
+    </table>
+</div>

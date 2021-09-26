@@ -1,0 +1,78 @@
+<app-admin></app-admin>
+
+
+<div class="m-1 p-2 mt-0 contain">
+    <table class="table">
+        <thead style="border-bottom: 7px solid grey; font-size: 10px;">
+            <tr class="text-center">
+                <th>{{type}}</th>
+                <th>Universe</th>
+                <th>Pocs Surveyed</th>
+                <th>IBL Chilller</th>
+                <th>Chillers Found</th>
+                <th>Pocs with glass</th>
+                <th>Good Execution (Glass)</th>
+                <th class="text-center">% Pocs Surveyed</th>
+                <th class="text-center">% Pocs with chiller</th>
+                <th class="text-center">% Pocs with glass</th>
+                <th class="text-center" >% Good Execution</th>
+            </tr>
+        </thead>
+
+        <tbody *ngIf="!loading">
+            <tr *ngFor="let data of trimmedData">
+                <td>{{ data?.district }} {{ data?.name }}</td>
+                <td class="text-center">{{ data?.universe }}</td>
+                <td class="text-center">{{ data?.pocSurveyed }}</td>
+                <td class="text-center">{{ data?.iblChiller }}</td>
+                <td class="text-center">{{ data?.chillersFound }}</td>
+                <td class="text-center">{{ data?.glass }}</td>
+                <td class="text-center">{{ data?.goodExec }}</td>
+                <td class="text-center text-dark font-weight-bold"> 
+                    <span class="p-2 pl-4 pr-4" [ngStyle]="{ 'border-radius': '2px', 'background-color': data?.percPocSurveyed <= 30? 'rgb(204, 82, 82)' : data?.percPocSurveyed <= 50? 'orange' : data?.percPocSurveyed <= 100? 'rgb(65, 201, 65)' :  'rgb(204, 82, 82)'}" 
+                    > {{ data?.percPocSurveyed !== 'NaN'? data?.percPocSurveyed : 0 }}% 
+                    </span> 
+                </td>
+                <td class="text-center text-dark font-weight-bold"> 
+                    <span class="p-2 pl-4 pr-4" [ngStyle]="{ 'border-radius': '2px', 'background-color': data?.percIblChiller <= 30? 'rgb(204, 82, 82)' : data?.percIblChiller <= 50? 'orange' : data?.percPocSurveyed <= 100? 'rgb(65, 201, 65)' :  'rgb(204, 82, 82)'}" > 
+                        {{ data?.percIblChiller !== 'NaN'? data?.percIblChiller : 0 }}% 
+                    </span>  
+                </td>
+                <td class="text-center text-dark font-weight-bold"> 
+                    <span class="p-2 pl-4 pr-4" [ngStyle]="{ 'border-radius': '2px', 'background-color': data?.percGlassChiller <= 30? 'rgb(204, 82, 82)' : data?.percGlassChiller <= 50? 'orange' : data?.percPocSurveyed <= 100? 'rgb(65, 201, 65)' :  'rgb(204, 82, 82)'}" > 
+                        {{ data?.percGlassChiller !== 'NaN'? data?.percGlassChiller : 0 }}% 
+                    </span>
+                </td>
+                <td class="text-center text-dark font-weight-bold"> 
+                    <span class="p-2 pl-4 pr-4" [ngStyle]="{ 'border-radius': '2px', 'background-color': data?.percGoodExec <= 30? 'rgb(204, 82, 82)' : data?.percGoodExec <= 50? 'orange' : data?.percPocSurveyed <= 100? 'rgb(65, 201, 65)' :  'rgb(204, 82, 82)'}" > 
+                        {{ data?.percGlassChiller !== 'NaN'? data?.percGlassChiller : 0 }}% 
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+
+        <thead style="border-bottom: 7px solid grey; font-size: 10px;">
+            <tr class="text-center">
+                <th>Total</th>
+                <th>{{ totalUniverse }}</th>
+                <th>{{ totalPocSurvey }}</th>
+                <th>{{ totalIblChiller }} </th>
+                <th>{{ totalChillerFound }}</th>
+                <th>{{ totalGlassChiller }}</th>
+                <th>{{ totalGoodExec }}</th>
+
+                <th class="text-center">{{ totalPercPocSurvey }}%</th>
+                <th class="text-center">{{ totalPercIblChiller }}%</th>
+                <!-- <th class="text-center">{{ totalPercChillerFound }}</th> -->
+                <th class="text-center">{{ totalPercGlassChiller }}%</th>
+                <th class="text-center">{{ totalPercGoodExec }}%</th>
+            </tr>
+        </thead>
+
+        <div *ngIf="loading">
+            <img src="https://portal.sftravel.com/login/images/ajax-loader.gif" width="30" alt="">
+            <div class="mt-4 ml-1">loading...</div>
+        </div>
+
+    </table>
+</div>

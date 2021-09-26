@@ -1,0 +1,43 @@
+<div class="bg _content" [ngStyle]="{'background-color':(success)? 'white':'black'}">
+
+  <div id="content" *ngIf="!success" class="">
+    <!-- You have not Captured any Image. -->
+    <div id="c" class="text-center">
+      <!-- <video id="video" class="">Video stream not available.</video> -->
+      <!-- stitched image -->
+      <div id="imgStitch">
+        <img [src]="singleImage" id="photo" alt="You have not Captured any Image."  *ngIf="data_.snapType=='single'">
+        <img [src]="image1" class="resnap" (click)="resnap(1)" alt="You have not Captured any Image." height= "50%" width="100%" *ngIf="data_.snapType=='stitched'">
+        <img [src]="image2" class="resnap" (click)="resnap(2)" alt="You have not Captured any Image." height= "50%" width="100%" *ngIf="data_.snapType=='stitched'">
+      </div>
+      <!-- stiched image -->
+      <input type="file" accept="image/*" capture="environment" name="file-input" id="file-input" (change)="onImageTaken($event)" hidden>
+      
+      <!-- <button id="startbutton"><i class="fa fa-camera" aria-hidden="true" style="font-size: 30px; padding: 10px;"></i></button>
+      <span id="back" style="color: #f20707;" (click)="backFunc()"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></span> -->
+    </div>
+    <div class="d-flex container">
+      <button id="reSnap" class="resnap" (click)="resnap(0)">Re-Take</button>
+      <button id="second_snap" class="ml-auto" (click)="snap_second_image()">Second Image</button>
+      <button id="stitch" (click)="stitch()" class="ml-auto" *ngIf="data_.value!=='opportunity'">Stitch Image</button>
+      <button id="proceed" (click)="proceed()" class="ml-auto" *ngIf="data_.value!=='opportunity'">Submit</button>
+      <button id="proceed" (click)="proceed()" class="ml-auto" *ngIf="data_.value=='opportunity' || data_.value=='survey'">Proceed</button>
+    <!-- <button id="proceed" (click)="proceed()" class="ml-auto"><a style="color: white;" id="img" href="" download="chiller{{pocId}}"> Proceed</a></button> -->
+    </div>
+  </div>
+
+
+  <div class="success text-justify text-center container" *ngIf="success">
+    <img src="assets/images/logo.png" alt="" width="240"> <br/>
+    <span class="text-dark font-weight-bold">is thinking...</span> 
+  </div>
+
+</div>
+<!-- <div class="output" id="output">
+</div> -->
+<!-- <div id="imgStitch">
+  <img src="assets/self1.jpeg" id="photo1" alt="You have not Captured any Image." height= "100%" width="100%">
+  <img src="assets/self2.jpeg" id="photo2" alt="You have not Captured any Image." height= "100%" width="100%">
+</div> -->
+
+<app-notify [notification_msg] = "notification_msg"></app-notify>
